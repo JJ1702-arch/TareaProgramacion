@@ -1,75 +1,105 @@
-﻿namespace ProgramacionEstructurada
+using System;
+using System.Collections.Generic;
+
+namespace ProgramacionEstructurada
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            int cantidadPersonas;
-            string nombrePersona;
-            int edadPersona;
+            int cantidadPersonas = 0;
+            bool entradaValida = false;
 
-            Console.WriteLine("Bienvenido al programa para poder clasificar personas");
-            Console.Write("Ingresa la cantidad de personas a registrar: ");
-            cantidadPersonas = int.Parse(Console.ReadLine());
+            Console.WriteLine("=== Sistema de Clasificación de Personas ===");
 
-            if (cantidadPersonas == 1)
+            // 1 & 2. Validar cantidad de personas
+            while (!entradaValida)
             {
-                Console.WriteLine("Ingrese el nombre de la persona 1");
-                nombrePersona = Console.ReadLine();
-                Console.WriteLine("Ingrese la edad de la persona 1");
-                edadPersona = int.Parse(Console.ReadLine());
-
-                if (edadPersona < 18)
+                Console.Write("Ingrese la cantidad de personas a registrar: ");
+                if (int.TryParse(Console.ReadLine(), out cantidadPersonas) && cantidadPersonas >= 1)
                 {
-                    Console.WriteLine(nombrePersona + " Es menor de edad");
+                    entradaValida = true;
                 }
                 else
                 {
-                    Console.Write(nombrePersona + " Es mayor de edad");
+                    Console.WriteLine("¡Error! Ingrese un número entero mayor o igual a 1.");
                 }
-
             }
-            else
+
+            // Listas para almacenar datos (Consideración adicional)
+            List<string> nombresTodos = new List<string>();
+            List<int> edadesTodas = new List<int>();
+
+            // 3 & 4. Captura de datos con validación de edad
+            for (int i = 0; i < cantidadPersonas; i++)
             {
-                List<int> edadesPersonasMenores = new List<int>();
-                List<int> edadesPersonasMayores = new List<int>();
-                List<string> nombresPersonasMenores = new List<string>();
-                List<string> nombresPersonasMayores = new List<string>();
+                Console.WriteLine($"\nRegistro de la persona #{i + 1}:");
+                Console.Write("Nombre: ");
+                string nombre = Console.ReadLine();
 
-                for (int i = 1; i <= cantidadPersonas; i++)
+                int edad = 0;
+                bool edadValida = false;
+                while (!edadValida)
                 {
-                    Console.WriteLine("Ingresa el nombre de la persona " + i);
-                    nombrePersona = Console.ReadLine();
-
-                    Console.WriteLine("Ingresa la edad de la persona");
-                    edadPersona = int.Parse(Console.ReadLine());
-
-                    if (edadPersona < 18)
+                    Console.Write("Edad: ");
+                    if (int.TryParse(Console.ReadLine(), out edad) && edad >= 0)
                     {
-                        nombresPersonasMenores.Add(nombrePersona);
-                        edadesPersonasMenores.Add(edadPersona);
+                        edadValida = true;
                     }
                     else
                     {
-                        nombresPersonasMayores.Add(nombrePersona);
-                        edadesPersonasMayores.Add(edadPersona);
+                        Console.WriteLine("¡Error! Ingrese una edad válida (solo números).");
                     }
                 }
 
-                Console.WriteLine("Edades personas mayores");
+                nombresTodos.Add(nombre);
+                edadesTodas.Add(edad);
+            }
 
-                for (int i = 0; i < edadesPersonasMayores.Count; i++)
+            // 5. Caso especial: Una sola persona
+            if (cantidadPersonas == 1)
+            {
+                Console.WriteLine("\n--- Resultado ---");
+                string estado = (edadesTodas[0] >= 18) ? "Mayor de edad" : "Menor de edad";
+                Console.WriteLine($"{nombresTodos[0]} es {estado}.");
+            }
+            // 6. Caso general: Dos o más personas
+            else
+            {
+                // 6.1 Mostrar lista general primero
+                Console.WriteLine("\n--- Lista General de Registrados ---");
+                for (int i = 0; i < nombresTodos.Count; i++)
                 {
-                    Console.WriteLine(nombresPersonasMayores[i] + " - " + edadesPersonasMayores[i]);
+                    Console.WriteLine($"{nombresTodos[i]} - {edadesTodas[i]} años");
                 }
 
-                Console.WriteLine("Edades personas menores");
+                // Listas para clasificación
+                List<string> mayores = new List<string>();
+                List<string> menores = new List<string>();
 
-                for (int i = 0; i < edadesPersonasMenores.Count; i++)
+                for (int i = 0; i < nombresTodos.Count; i++)
                 {
-                    Console.WriteLine(nombresPersonasMenores[i] + " - " + edadesPersonasMenores[i]);
+                    string info = $"{nombresTodos[i]} ({edadesTodas[i]} años)";
+                    if (edadesTodas[i] >= 18) mayores.Add(info);
+                    else menores.Add(info);
+                }
+
+                // 6.3 y 6.4 Mostrar solo si contienen datos
+                if (mayores.Count > 0)
+                {
+                    Console.WriteLine("\n--- Personas Mayores de Edad ---");
+                    mayores.ForEach(p => Console.WriteLine(p));
+                }
+
+                if (menores.Count > 0)
+                {
+                    Console.WriteLine("\n--- Personas Menores de Edad ---");
+                    menores.ForEach(p => Console.WriteLine(p));
                 }
             }
+
+            Console.WriteLine("\nPresione cualquier tecla para salir...");
+            Console.ReadKey();
         }
     }
 }
