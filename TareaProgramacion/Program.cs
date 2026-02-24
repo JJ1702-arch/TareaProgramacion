@@ -12,7 +12,7 @@ namespace ProgramacionEstructurada
 
             Console.WriteLine("=== Sistema de Clasificación de Personas ===");
 
-            // 1 & 2. Validar cantidad de personas
+            // Validar cantidad de personas
             while (!entradaValida)
             {
                 Console.Write("Ingrese la cantidad de personas a registrar: ");
@@ -26,11 +26,11 @@ namespace ProgramacionEstructurada
                 }
             }
 
-            // Listas para almacenar datos (Consideración adicional)
+            // Listas para almacenar datos 
             List<string> nombresTodos = new List<string>();
             List<int> edadesTodas = new List<int>();
 
-            // 3 & 4. Captura de datos con validación de edad
+            // Captura de datos con validación de edad
             for (int i = 0; i < cantidadPersonas; i++)
             {
                 Console.WriteLine($"\nRegistro de la persona #{i + 1}:");
@@ -56,17 +56,17 @@ namespace ProgramacionEstructurada
                 edadesTodas.Add(edad);
             }
 
-            // 5. Caso especial: Una sola persona
+            // Caso especial: Una sola persona
             if (cantidadPersonas == 1)
             {
                 Console.WriteLine("\n--- Resultado ---");
                 string estado = (edadesTodas[0] >= 18) ? "Mayor de edad" : "Menor de edad";
                 Console.WriteLine($"{nombresTodos[0]} es {estado}.");
             }
-            // 6. Caso general: Dos o más personas
+            // Caso general: Dos o más personas
             else
             {
-                // 6.1 Mostrar lista general primero
+                // Mostrar lista general primero
                 Console.WriteLine("\n--- Lista General de Registrados ---");
                 for (int i = 0; i < nombresTodos.Count; i++)
                 {
@@ -84,7 +84,7 @@ namespace ProgramacionEstructurada
                     else menores.Add(info);
                 }
 
-                // 6.3 y 6.4 Mostrar solo si contienen datos
+                // Mostrar solo si contienen datos
                 if (mayores.Count > 0)
                 {
                     Console.WriteLine("\n--- Personas Mayores de Edad ---");
