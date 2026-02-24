@@ -22,7 +22,7 @@ namespace ProgramacionEstructurada
                 }
                 else
                 {
-                    Console.WriteLine("¡Error! Ingrese un número entero mayor o igual a 1.");
+                    Console.WriteLine("Esta mal. Vuelva a intentar");
                 }
             }
 
@@ -48,7 +48,7 @@ namespace ProgramacionEstructurada
                     }
                     else
                     {
-                        Console.WriteLine("¡Error! Ingrese una edad válida (solo números).");
+                        Console.WriteLine("Esta mal. Vuelva intentarlo solo con numeros");
                     }
                 }
 
